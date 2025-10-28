@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Case study BigXBang : une newsletter sur-mesure pensée du concept à la ligne de code, avec workflow complet, stack technique et démonstration interactive.">
+    <title>Case Study : Ma Newsletter BigXBang | BigXBang</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="Charte%20graphique/Logo.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        :root {
+            --bg-dark: #0a0a0a;
+            --surface: rgba(20, 20, 30, 0.8);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.3);
+            --info-bg: rgba(99, 102, 241, 0.08);
+            --info-border: rgba(99, 102, 241, 0.25);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding: 40px 0;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Clash Display', 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Background effects similaires à bigxbang.studio */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(147, 51, 234, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(-5%, 5%); }
+        }
+
+        @keyframes arrowSlide {
+            0% { transform: translateX(-10px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        .arrow-appear {
+            animation: arrowSlide 0.8s ease-out forwards;
+            opacity: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 80px 0 40px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.7) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s, text-shadow 0.3s;
+            margin-bottom: 32px;
+        }
+
+        .back-link:hover {
+            color: var(--text);
+            text-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Section card */
+        .section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: clamp(32px, 5vw, 48px);
+            margin-bottom: 32px;
+            backdrop-filter: blur(10px);
+        }
+
+        .section h2 {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .section h3 {
+            font-size: clamp(1.3rem, 2vw, 1.6rem);
+            margin: 32px 0 16px;
+            font-weight: 600;
+            font-family: 'Clash Display', 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section p {
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+        }
+
+        .section ul {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .section li {
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+            font-size: 1.05rem;
+        }
+
+        .section li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .section strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* Info boxes */
+        .info-box {
+            background: var(--info-bg);
+            border-left: 3px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin: 24px 0;
+            transition: box-shadow 0.3s;
+        }
+
+        .info-box:hover {
+            box-shadow: 0 0 32px rgba(99, 102, 241, 0.2);
+        }
+
+        .info-box-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .info-box p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* Approach cards */
+        .approach-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .approach-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .approach-card:hover {
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 0 32px rgba(99, 102, 241, 0.25);
+        }
+
+        .approach-card .icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .approach-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .approach-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .approach-card ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .approach-card li {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .approach-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Process steps */
+        .process-steps {
+            display: grid;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .process-step {
+            display: flex;
+            gap: 16px;
+            align-items: start;
+        }
+
+        .step-number {
+            min-width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: 'Clash Display', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .step-content h4 {
+            margin: 0 0 8px;
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+
+        .step-content p {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            border-radius: 39px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #0a0a0a;
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-primary:hover {
+            background: #306EE8;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(48, 110, 232, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid white;
+        }
+
+        .btn-secondary:hover {
+            border-color: #306EE8;
+            background: rgba(48, 110, 232, 0.1);
+            box-shadow: 0 8px 24px rgba(48, 110, 232, 0.15);
+        }
+
+        .email-preview-button {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            padding: 12px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            cursor: pointer;
+        }
+
+        .email-preview-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 36px rgba(99, 102, 241, 0.45);
+            background: #7c82f8;
+        }
+
+        .email-preview-button:active {
+            transform: translateY(0);
+            box-shadow: 0 10px 24px rgba(99, 102, 241, 0.35);
+            background: #585cf0;
+        }
+
+        .email-preview-button:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.6);
+            outline-offset: 3px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 48px 32px;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 16px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 32px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 60px 0 32px;
+            }
+
+            .section {
+                padding: 24px;
+            }
+
+            .approach-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="https://www.bigxbang.studio" class="back-link">
+                ← Retour au site
+            </a>
+            <span class="badge">Case Study</span>
+            <h1>J'ai conçu une newsletter.</h1>
+            <p class="subtitle">Une preuve de méthode : du concept à la ligne de code, tout est pensé pour que la forme et le fond parlent d'une seule voix. La seule différence avec un cas classique ? C'est moi le client. Et je suis du genre exigeant.</p>
+            <div style="margin-top: 32px;">
+                <a href="https://calendar.app.google/qk7pa13Mu3fP3ex16" class="btn btn-primary" target="_blank">Je contacte</a>
+            </div>
+        </header>
+
+        <main>
+            <!-- Le constat -->
+            <section class="section">
+                <h2>Le constat</h2>
+                <p>Les newsletters d'entreprise ? Trop souvent du bruit. Des visuels sortis d'un PowerPoint, des actus recyclées, et zéro intérêt pour le lecteur.</p>
+
+                <p>J'en avais marre de ce format traité comme une corvée.</p>
+
+                <p>Si je voulais prouver ce qu'était une bonne newsletter, il fallait en faire une, pas en parler.</p>
+
+                <p>Donc j'ai construit un prototype complet, du contenu au code, pour montrer que c'est faisable, clair et efficace.</p>
+
+                <p>Et si tu lis ça en te disant "ma boîte aurait besoin d'un truc comme ça", c'est normal : ce projet est une base adaptable, pas une vitrine personnelle.</p>
+            </section>
+
+            <!-- L'intention -->
+            <section class="section">
+                <h2>L'intention</h2>
+                <p>L'objectif, c'était pas de "communiquer". C'était de faire une newsletter qui sert à quelque chose.</p>
+
+                <ul>
+                    <li><strong>Positionner une expertise</strong> : Montrer qu'on comprend la tech, le design, l'IA.</li>
+                    <li><strong>Apporter de la valeur</strong> : Vulgariser sans condescendre, donner des clés concrètes.</li>
+                    <li><strong>Rappeler sans spammer</strong> : Exister dans la tête des gens, pas dans leurs indésirables.</li>
+                </ul>
+
+                <p>Une bonne newsletter, c'est un prolongement de ta voix. Si elle te ressemble, elle parle pour toi, même quand t'es pas là.</p>
+            </section>
+
+            <!-- La démo -->
+            <section class="section">
+                <h2>La démo (le "comment")</h2>
+                <p>Ce projet, c'est un proof of concept, pas une success story.</p>
+
+                <p>L'idée : montrer qu'on peut produire un contenu solide, avec une vraie patte visuelle et une base technique fiable, sans dépendre d'un outil figé ou d'un template générique.</p>
+
+                <p>J'ai exploré deux chemins :</p>
+
+                <div class="approach-grid">
+                    <div class="approach-card">
+                        <span class="icon">📧</span>
+                        <h4>Option 1 : Les plateformes classiques</h4>
+                        <p>Mailchimp, Brevo, Sendinblue...</p>
+                        <p>Pratiques, rapides, mais impersonnelles.</p>
+                        <p>Bien pour cocher les cases, pas pour créer une identité.</p>
+                    </div>
+
+                    <div class="approach-card">
+                        <span class="icon">⚙️</span>
+                        <h4>Option 2 : Le sur-mesure (mon choix)</h4>
+                        <p>Un template codé à la main (HTML/CSS), relié à Gmail via GMass.</p>
+                        <p>Design cohérent avec l'univers BigXBang, données locales, envoi maîtrisé et conforme RGPD.</p>
+                    </div>
+                </div>
+
+                <p><strong>Ce que j'ai fait ici pour moi, je peux le construire pour toi.</strong> Ton ton, ton univers, ton format.</p>
+
+                <div class="info-box">
+                    <div class="info-box-title">
+                        💡 C'est quoi GMass ?
+                    </div>
+                    <p>GMass, c'est un outil qui transforme Gmail en plateforme d'envoi de masse. Tu gardes ton interface Gmail, mais tu peux envoyer des campagnes à des milliers de personnes avec tracking et personnalisation. Moins sexy qu'un Mailchimp, mais beaucoup plus flexible pour du custom.</p>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-title">
+                        💡 Pourquoi du HTML custom ?
+                    </div>
+                    <p>Un email HTML, c'est pas du Word. C'est du code qui dit au client mail (Gmail, Outlook...) comment afficher ton contenu : les couleurs, les typos, la mise en page, tout. Avec un template Mailchimp, t'es limité à leurs options. Avec du HTML codé à la main, tu contrôles chaque pixel.</p>
+                </div>
+
+                <h3 style="margin-top: 48px;">Concrètement, à quoi ça ressemble ?</h3>
+<p style="margin-bottom: 32px;">Voilà un exemple de mini-newsletter. À gauche le code, à droite le rendu.</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 48px 1fr; gap: 24px; align-items: stretch; margin: 32px 0;">
+                    <!-- Code snippet -->
+                    <div style="background: #1e1e1e; border-radius: 12px; padding: 20px; overflow-x: auto; display: flex; align-items: center;">
+                        <pre style="margin: 0; font-family: 'Fira Code', 'Consolas', monospace; font-size: 10.5px; line-height: 1.5; color: #d4d4d4;"><code>&lt;<span style="color: #569cd6;">div</span> <span style="color: #9cdcfe;">style</span>=<span style="color: #ce9178;">"max-width: 600px;
+  background: #0a0a0a; padding: 40px;"</span>&gt;
+  
+  <span style="color: #6a9955;">&lt;!-- Logo SVG --&gt;</span>
+  &lt;<span style="color: #569cd6;">svg</span> <span style="color: #9cdcfe;">width</span>=<span style="color: #ce9178;">"120"</span> <span style="color: #9cdcfe;">height</span>=<span style="color: #ce9178;">"40"</span>&gt;
+    &lt;<span style="color: #569cd6;">circle</span> <span style="color: #9cdcfe;">cx</span>=<span style="color: #ce9178;">"20"</span> <span style="color: #9cdcfe;">fill</span>=<span style="color: #ce9178;">"#fff"</span> /&gt;
+  &lt;/<span style="color: #569cd6;">svg</span>&gt;
+  
+  &lt;<span style="color: #569cd6;">h2</span> <span style="color: #9cdcfe;">style</span>=<span style="color: #ce9178;">"color: #fff;
+    font-size: 24px;"</span>&gt;
+    🔮  Le futur se lit en 500 caractères.
+  &lt;/<span style="color: #569cd6;">h2</span>&gt;
+
+  &lt;<span style="color: #569cd6;">p</span> <span style="color: #9cdcfe;">style</span>=<span style="color: #ce9178;">"color: #a0a0a0;
+    line-height: 1.6;"</span>&gt;
+    Les IA prédisent l'avenir, moi je t'en
+    envoie un aperçu chaque semaine. Pas des
+    prédictions, des perspectives.
+  &lt;/<span style="color: #569cd6;">p</span>&gt;
+  
+  &lt;<span style="color: #569cd6;">a</span> <span style="color: #9cdcfe;">href</span>=<span style="color: #ce9178;">"#"</span>&gt;
+    Lire l'article
+  &lt;/<span style="color: #569cd6;">a</span>&gt;
+&lt;/<span style="color: #569cd6;">div</span>&gt;</code></pre>
+                    </div>
+
+                    <!-- Arrow -->
+                    <div id="arrow" style="font-size: 32px; color: var(--accent); display: flex; align-items: center; justify-content: center;">
+                        →
+                    </div>
+
+                    <!-- Visual render -->
+                    <div style="background: #0a0a0a; border: 1px solid #0a0a0a; border-radius: 12px; padding: 24px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 40px rgba(99, 102, 241, 0.15);">
+                        <div style="width: 100%; background: #0a0a0a; padding: 40px; border-radius: 8px;">
+                            <!-- Logo SVG intégré -->
+                            <svg width="140" height="48" viewBox="0 0 1129 391" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 24px;">
+                                <path d="M557.615 239H507.045V151.9H555.795C561.429 151.9 566.195 152.723 570.095 154.37C574.082 156.017 577.115 158.443 579.195 161.65C581.362 164.857 582.445 168.757 582.445 173.35C582.445 178.463 580.929 182.797 577.895 186.35C574.949 189.903 570.139 192.07 563.465 192.85V193.76C570.919 194.627 576.465 196.967 580.105 200.78C583.745 204.507 585.565 209.23 585.565 214.95C585.565 219.89 584.482 224.18 582.315 227.82C580.149 231.46 576.985 234.233 572.825 236.14C568.665 238.047 563.595 239 557.615 239ZM520.955 200V226.39H556.055C561.255 226.39 565.112 225.35 567.625 223.27C570.225 221.103 571.525 217.68 571.525 213C571.525 208.407 570.225 205.113 567.625 203.12C565.112 201.04 561.255 200 556.055 200H520.955ZM520.955 164.51V188.43H553.845C558.785 188.43 562.469 187.477 564.895 185.57C567.322 183.577 568.535 180.543 568.535 176.47C568.535 172.397 567.365 169.407 565.025 167.5C562.685 165.507 559.089 164.51 554.235 164.51H520.955ZM608.698 239H594.658V174.39H608.698V239ZM608.698 166.85H594.658V151.9H608.698V166.85ZM655.629 262.4C649.216 262.4 643.583 261.403 638.729 259.41C633.876 257.503 630.063 254.73 627.289 251.09C624.603 247.45 623.259 243.03 623.259 237.83H637.169C637.169 240.95 637.819 243.463 639.119 245.37C640.419 247.277 642.456 248.62 645.229 249.4C648.089 250.267 651.816 250.7 656.409 250.7C661.349 250.7 665.249 250.137 668.109 249.01C671.056 247.97 673.179 246.107 674.479 243.42C675.779 240.733 676.429 237.007 676.429 232.24V194.41L677.469 193.5V174.39H690.339V231.46C690.339 238.653 688.909 244.503 686.049 249.01C683.189 253.603 679.159 256.983 673.959 259.15C668.759 261.317 662.649 262.4 655.629 262.4ZM649.779 233.15C643.366 233.15 637.863 231.893 633.269 229.38C628.763 226.867 625.253 223.357 622.739 218.85C620.313 214.343 619.099 209.1 619.099 203.12C619.099 197.14 620.356 191.897 622.869 187.39C625.469 182.883 629.109 179.373 633.789 176.86C638.556 174.347 644.189 173.09 650.689 173.09C657.449 173.09 663.169 174.607 667.849 177.64C672.616 180.587 675.563 184.877 676.689 190.51H679.679L678.899 201.82H676.429C676.429 198.18 675.563 195.147 673.829 192.72C672.096 190.207 669.626 188.343 666.419 187.13C663.213 185.917 659.313 185.31 654.719 185.31C650.299 185.31 646.443 185.873 643.149 187C639.943 188.127 637.473 189.99 635.739 192.59C634.093 195.103 633.269 198.613 633.269 203.12C633.269 207.54 634.093 211.05 635.739 213.65C637.386 216.25 639.769 218.157 642.889 219.37C646.096 220.497 649.909 221.06 654.329 221.06C661.436 221.06 666.896 219.587 670.709 216.64C674.523 213.693 676.429 209.36 676.429 203.64H678.899V216.38H675.519C674.393 221.32 671.663 225.35 667.329 228.47C662.996 231.59 657.146 233.15 649.779 233.15ZM720.548 239H707.39L729.218 213.908V213.296L707.39 188.306H720.752L737.582 207.482H738.194L754.82 188.306H768.08L746.252 213.092V213.704L768.08 239H754.718L737.888 219.62H737.174L720.548 239ZM835.018 239H784.448V151.9H833.198C838.831 151.9 843.598 152.723 847.498 154.37C851.484 156.017 854.518 158.443 856.598 161.65C858.764 164.857 859.848 168.757 859.848 173.35C859.848 178.463 858.331 182.797 855.298 186.35C852.351 189.903 847.541 192.07 840.868 192.85V193.76C848.321 194.627 853.868 196.967 857.508 200.78C861.148 204.507 862.968 209.23 862.968 214.95C862.968 219.89 861.884 224.18 859.718 227.82C857.551 231.46 854.388 234.233 850.228 236.14C846.068 238.047 840.998 239 835.018 239ZM798.358 200V226.39H833.458C838.658 226.39 842.514 225.35 845.028 223.27C847.628 221.103 848.928 217.68 848.928 213C848.928 208.407 847.628 205.113 845.028 203.12C842.514 201.04 838.658 200 833.458 200H798.358ZM798.358 164.51V188.43H831.248C836.188 188.43 839.871 187.477 842.298 185.57C844.724 183.577 845.938 180.543 845.938 176.47C845.938 172.397 844.768 169.407 842.428 167.5C840.088 165.507 836.491 164.51 831.638 164.51H798.358ZM933.161 239H920.291V222.36L919.381 221.97V199.87C919.381 194.497 918.081 190.77 915.481 188.69C912.967 186.523 908.591 185.44 902.351 185.44C896.371 185.44 891.907 186.48 888.961 188.56C886.014 190.64 884.541 194.063 884.541 198.83V199.35H870.631V198.83C870.631 193.89 871.931 189.513 874.531 185.7C877.131 181.8 880.857 178.723 885.711 176.47C890.651 174.217 896.544 173.09 903.391 173.09C910.237 173.09 915.827 174.26 920.161 176.6C924.581 178.853 927.831 181.973 929.911 185.96C932.077 189.947 933.161 194.54 933.161 199.74V239ZM891.041 240.3C884.367 240.3 879.037 238.827 875.051 235.88C871.151 232.847 869.201 228.687 869.201 223.4C869.201 220.02 870.024 217.203 871.671 214.95C873.404 212.61 875.831 210.79 878.951 209.49C882.071 208.19 885.754 207.28 890.001 206.76L920.681 203.51V211.83L894.031 214.82C890.391 215.253 887.661 216.033 885.841 217.16C884.107 218.2 883.241 219.977 883.241 222.49C883.241 225.09 884.151 227.04 885.971 228.34C887.877 229.553 890.824 230.16 894.811 230.16C899.751 230.16 904.041 229.553 907.681 228.34C911.321 227.04 914.181 225.047 916.261 222.36C918.341 219.673 919.381 216.207 919.381 211.96L921.201 212.22V222.88H919.381C917.647 228.34 914.311 232.63 909.371 235.75C904.517 238.783 898.407 240.3 891.041 240.3ZM1013.16 239H999.123V203.9C999.123 197.833 997.65 193.283 994.703 190.25C991.843 187.217 987.033 185.7 980.273 185.7C973.253 185.7 968.053 187.52 964.673 191.16C961.38 194.713 959.733 200 959.733 207.02L957.263 207.15L956.613 194.41H959.473C960.167 190.77 961.553 187.347 963.633 184.14C965.8 180.847 968.747 178.203 972.473 176.21C976.287 174.13 980.923 173.09 986.383 173.09C992.363 173.09 997.347 174.303 1001.33 176.73C1005.32 179.157 1008.27 182.407 1010.17 186.48C1012.17 190.553 1013.16 195.103 1013.16 200.13V239ZM959.733 239H945.693V174.39H958.563V194.67L959.733 195.32V239ZM1059.6 262.4C1053.19 262.4 1047.56 261.403 1042.7 259.41C1037.85 257.503 1034.04 254.73 1031.26 251.09C1028.58 247.45 1027.23 243.03 1027.23 237.83H1041.14C1041.14 240.95 1041.79 243.463 1043.09 245.37C1044.39 247.277 1046.43 248.62 1049.2 249.4C1052.06 250.267 1055.79 250.7 1060.38 250.7C1065.32 250.7 1069.22 250.137 1072.08 249.01C1075.03 247.97 1077.15 246.107 1078.45 243.42C1079.75 240.733 1080.4 237.007 1080.4 232.24V194.41L1081.44 193.5V174.39H1094.31V231.46C1094.31 238.653 1092.88 244.503 1090.02 249.01C1087.16 253.603 1083.13 256.983 1077.93 259.15C1072.73 261.317 1066.62 262.4 1059.6 262.4ZM1053.75 233.15C1047.34 233.15 1041.84 231.893 1037.24 229.38C1032.74 226.867 1029.23 223.357 1026.71 218.85C1024.29 214.343 1023.07 209.1 1023.07 203.12C1023.07 197.14 1024.33 191.897 1026.84 187.39C1029.44 182.883 1033.08 179.373 1037.76 176.86C1042.53 174.347 1048.16 173.09 1054.66 173.09C1061.42 173.09 1067.14 174.607 1071.82 177.64C1076.59 180.587 1079.54 184.877 1080.66 190.51H1083.65L1082.87 201.82H1080.4C1080.4 198.18 1079.54 195.147 1077.8 192.72C1076.07 190.207 1073.6 188.343 1070.39 187.13C1067.19 185.917 1063.29 185.31 1058.69 185.31C1054.27 185.31 1050.42 185.873 1047.12 187C1043.92 188.127 1041.45 189.99 1039.71 192.59C1038.07 195.103 1037.24 198.613 1037.24 203.12C1037.24 207.54 1038.07 211.05 1039.71 213.65C1041.36 216.25 1043.74 218.157 1046.86 219.37C1050.07 220.497 1053.88 221.06 1058.3 221.06C1065.41 221.06 1070.87 219.587 1074.68 216.64C1078.5 213.693 1080.4 209.36 1080.4 203.64H1082.87V216.38H1079.49C1078.37 221.32 1075.64 225.35 1071.3 228.47C1066.97 231.59 1061.12 233.15 1053.75 233.15Z" fill="white"/>
+                                <circle cx="195.5" cy="195.5" r="195.5" fill="white"/>
+                                <path d="M197.319 102.77L194.056 78.5058L203.253 69.9665L227.209 75.0174L223.74 86.2667L206.626 78.7869L202.603 82.5228L208.795 100.143L197.319 102.77ZM222.236 51.9847L202.808 66.9899L190.738 63.2123L183.185 39.8989L194.564 37.3607L196.746 55.8498L202.049 57.5265L214.134 43.4515L222.236 51.9847ZM165.557 56.2659L188.247 65.525L191.121 77.842L174.718 96.1045L166.808 87.3934L181.739 76.3841L180.46 70.9715L162.183 67.4262L165.557 56.2659Z" fill="black"/>
+                                <path d="M333.715 291.143L317.539 281.224L316.911 271.517L331.675 259.596L336.735 267.189L323.862 273.809L324.137 278.055L337.755 282.962L333.715 291.143ZM315.401 251.308L314.905 270.327L306.726 275.73L289.02 268.854L293.067 260.774L305.244 268.515L308.847 266.15L306.307 251.998L315.401 251.308ZM290.224 287.458L306.896 278.358L315.703 282.662L318.645 301.459L309.538 301.946L310.234 287.585L306.356 285.704L295.277 294.949L290.224 287.458Z" fill="black"/>
+                                <path d="M99.7152 291.143L83.539 281.224L82.9111 271.517L97.6746 259.596L102.735 267.189L89.8621 273.809L90.1368 278.055L103.755 282.962L99.7152 291.143ZM81.4008 251.308L80.905 270.327L72.7257 275.73L55.0203 268.854L59.0666 260.774L71.2437 268.515L74.8474 266.15L72.3074 251.998L81.4008 251.308ZM56.2238 287.458L72.8958 278.358L81.7029 282.662L84.6449 301.459L75.5384 301.946L76.234 287.585L72.3556 285.704L61.2773 294.949L56.2238 287.458Z" fill="black"/>
+                                <path d="M168.478 102.811L167.714 102.889L166.965 102.975L166.244 103.073L165.566 103.193L164.942 103.338L164.384 103.515L163.901 103.728L163.501 103.981L163.189 104.276L162.969 104.615L162.842 104.999L162.807 105.427L162.86 105.897L162.996 106.407L163.207 106.953L163.483 107.531L163.815 108.135L164.188 108.759L164.59 109.397L165.007 110.041L165.423 110.686L165.826 111.324L166.199 111.948L166.53 112.552L166.807 113.13L167.018 113.676L167.154 114.186L167.207 114.656L167.171 115.084L167.044 115.468L166.824 115.807L166.513 116.102L166.113 116.355L165.63 116.568L165.072 116.745L164.448 116.89L163.769 117.009L163.049 117.108L162.3 117.193L161.536 117.271L160.772 117.35L160.023 117.435L159.302 117.534L158.624 117.653L158 117.798L157.442 117.975L156.959 118.188L156.559 118.441L156.247 118.736L156.027 119.075L155.9 119.459L155.865 119.887L155.918 120.357L156.054 120.867L156.265 121.413L156.541 121.991L156.873 122.595L157.246 123.219L157.648 123.857L158.065 124.502L158.482 125.146L158.884 125.784L159.257 126.408L159.589 127.012L159.865 127.59L160.076 128.136L160.212 128.646L160.265 129.116L160.23 129.544L160.103 129.928L159.883 130.267L159.571 130.562L159.171 130.815L158.688 131.028L158.13 131.205L157.506 131.35L156.828 131.469L156.107 131.568L155.358 131.653L154.594 131.732L153.83 131.81L153.081 131.895L152.361 131.994L151.682 132.113L151.058 132.258L150.5 132.435L150.018 132.648L149.617 132.901L149.306 133.196L149.086 133.535L148.959 133.919L148.923 134.347L148.976 134.817L149.112 135.327L149.323 135.873L149.6 136.451L149.931 137.055L150.304 137.679L150.707 138.317L151.123 138.962L151.54 139.607L151.942 140.244L152.316 140.869L152.647 141.472L152.923 142.05L153.134 142.596L153.27 143.106L153.323 143.576L153.288 144.004L153.161 144.388L152.941 144.727L152.629 145.022L152.229 145.275L151.746 145.488L151.188 145.665L150.564 145.81L149.886 145.93L149.165 146.029L148.416 146.114L147.652 146.192L146.889 146.27L146.139 146.355L145.419 146.454L144.74 146.573L144.117 146.719L143.559 146.895L143.076 147.108L142.676 147.361L142.364 147.656L142.144 147.996L142.017 148.379L141.981 148.807L142.035 149.277L142.17 149.788L142.381 150.334L142.658 150.911L142.989 151.515L143.363 152.139L143.765 152.777L144.181 153.422L144.598 154.067L145 154.705L145.374 155.329L145.705 155.933L145.982 156.51L146.193 157.056L146.328 157.566L146.381 158.037L146.346 158.464L146.219 158.848L145.999 159.187L145.687 159.483L145.287 159.735L144.804 159.948L144.246 160.125L143.623 160.271L142.944 160.39L142.224 160.489L141.474 160.574L140.711 160.652L139.947 160.73L139.198 160.815L138.477 160.914L137.799 161.033L137.175 161.179L136.617 161.356L136.134 161.569L135.734 161.821L135.422 162.117L135.202 162.456L135.075 162.84L135.04 163.267L135.093 163.738L135.229 164.248L135.44 164.794L135.716 165.371L136.047 165.975L136.421 166.599L136.823 167.237L137.24 167.882L137.656 168.527L138.059 169.165L138.432 169.789L138.763 170.393L139.04 170.97L139.251 171.516L139.387 172.026L139.44 172.497L139.404 172.925L139.277 173.308L139.057 173.648L138.746 173.943L138.345 174.195L137.863 174.408L137.304 174.585L136.681 174.731L136.002 174.85L135.282 174.949L134.533 175.034L133.769 175.112L133.005 175.19L132.256 175.275L131.535 175.374L130.857 175.494L130.233 175.639L129.675 175.816L129.192 176.029L128.792 176.282L128.48 176.577L128.26 176.916L128.133 177.3L128.098 177.728L128.151 178.198L128.287 178.708L128.498 179.254L128.774 179.832L129.106 180.435L129.479 181.06L129.881 181.697L130.298 182.342L130.715 182.987L131.117 183.625L131.49 184.249L131.821 184.853L132.098 185.431L132.309 185.977L132.445 186.487L132.498 186.957L132.463 187.385L132.336 187.769L132.116 188.108L131.804 188.403L131.404 188.656L130.921 188.869L130.363 189.046L129.739 189.191L129.061 189.31L128.34 189.409L127.591 189.494L126.827 189.572L126.063 189.65L125.314 189.736L124.594 189.835L123.915 189.954L123.291 190.099L122.733 190.276L122.25 190.489L121.85 190.742L121.539 191.037L121.319 191.376L121.191 191.76L121.156 192.188L121.209 192.658L121.345 193.168L121.556 193.714L121.833 194.292L122.164 194.896L122.537 195.52L122.939 196.158L123.356 196.802L123.773 197.447L124.175 198.085L124.548 198.709L124.88 199.313L125.156 199.891L125.367 200.437L125.503 200.947L125.556 201.417L125.521 201.845L125.394 202.229L125.174 202.568L124.862 202.863L124.462 203.116L123.979 203.329L123.421 203.506L122.797 203.651L122.119 203.77L121.398 203.869L120.649 203.954L119.885 204.032L119.122 204.111L118.372 204.196L117.652 204.295L116.973 204.414L116.35 204.559L115.792 204.736L115.309 204.949L114.909 205.202L114.597 205.497L114.377 205.836L114.25 206.22L114.214 206.648L114.267 207.118L114.403 207.628L114.614 208.174L114.891 208.752L115.222 209.356L115.596 209.98L115.998 210.618L116.414 211.263L116.831 211.907L117.233 212.545L117.607 213.169L117.938 213.773L118.215 214.351L118.426 214.897L118.561 215.407L118.614 215.877L118.579 216.305L118.452 216.689L118.232 217.028L117.92 217.323L117.52 217.576L117.037 217.789L116.479 217.966L115.855 218.111L115.177 218.23L114.457 218.329L113.707 218.415L112.944 218.493L112.18 218.571L111.43 218.656L110.71 218.755L110.032 218.874L109.408 219.019L108.85 219.196L108.367 219.409L107.967 219.662L107.655 219.957L107.435 220.296L107.308 220.68L107.273 221.108L107.326 221.578L107.461 222.088L107.672 222.634L107.949 223.212L108.28 223.816L108.654 224.44L109.056 225.078L109.473 225.723L109.889 226.368L110.291 227.005L110.665 227.63L110.996 228.233L111.273 228.811L111.484 229.357L111.62 229.867L111.673 230.337L111.637 230.765L111.51 231.149L111.29 231.488L110.978 231.783L110.578 232.036L110.095 232.249L109.537 232.426L108.914 232.571L108.235 232.691L107.515 232.79L106.766 232.875L106.002 232.953L105.238 233.031L104.489 233.116L103.768 233.215L103.09 233.334L102.466 233.48L101.908 233.657L101.425 233.87L101.025 234.122L100.713 234.417L100.493 234.757L100.366 235.14L100.331 235.568L100.384 236.039L100.52 236.549L100.731 237.095L101.007 237.672L101.339 238.276L101.712 238.9L102.114 239.538L102.531 240.183L102.948 240.828L103.35 241.466L103.723 242.09L104.054 242.694L104.331 243.271L104.542 243.817L104.678 244.327L104.731 244.798L104.696 245.225L104.568 245.609L104.348 245.948L104.037 246.244L103.637 246.496L103.154 246.709L102.596 246.886L101.972 247.032L101.294 247.151L100.573 247.25L99.8237 247.335" stroke="black" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round"/>
+                                <path d="M292.468 247.056L292.885 246.411L293.287 245.773L293.66 245.149L293.992 244.545L294.268 243.968L294.479 243.422L294.615 242.912L294.668 242.441L294.633 242.014L294.506 241.63L294.286 241.29L293.974 240.995L293.574 240.743L293.091 240.53L292.533 240.353L291.909 240.207L291.231 240.088L290.511 239.989L289.761 239.904L288.998 239.826L288.234 239.747L287.485 239.662L286.764 239.563L286.086 239.444L285.462 239.299L284.904 239.122L284.421 238.909L284.021 238.656L283.709 238.361L283.489 238.021L283.362 237.638L283.327 237.21L283.38 236.74L283.516 236.23L283.727 235.683L284.003 235.106L284.335 234.502L284.708 233.878L285.11 233.24L285.527 232.595L285.944 231.95L286.346 231.313L286.72 230.689L287.051 230.085L287.328 229.507L287.539 228.961L287.674 228.451L287.727 227.981L287.692 227.553L287.565 227.169L287.345 226.83L287.033 226.535L286.633 226.282L286.15 226.069L285.592 225.892L284.969 225.747L284.29 225.627L283.57 225.528L282.821 225.443L282.057 225.365L281.293 225.287L280.544 225.202L279.823 225.103L279.145 224.983L278.521 224.838L277.963 224.661L277.48 224.448L277.08 224.195L276.768 223.9L276.548 223.561L276.421 223.177L276.386 222.749L276.439 222.279L276.575 221.769L276.786 221.223L277.063 220.645L277.394 220.041L277.767 219.417L278.17 218.779L278.586 218.135L279.003 217.49L279.405 216.852L279.779 216.228L280.11 215.624L280.387 215.046L280.598 214.5L280.734 213.99L280.787 213.52L280.751 213.092L280.624 212.708L280.404 212.369L280.093 212.074L279.693 211.821L279.21 211.608L278.652 211.431L278.028 211.286L277.35 211.167L276.629 211.068L275.88 210.983L275.116 210.904L274.352 210.826L273.603 210.741L272.882 210.642L272.204 210.523L271.58 210.377L271.022 210.2L270.539 209.987L270.139 209.735L269.828 209.439L269.608 209.1L269.481 208.716L269.445 208.288L269.498 207.818L269.634 207.308L269.845 206.762L270.122 206.185L270.453 205.581L270.827 204.957L271.229 204.319L271.646 203.674L272.062 203.029L272.465 202.391L272.838 201.767L273.169 201.163L273.446 200.586L273.657 200.04L273.793 199.53L273.846 199.059L273.811 198.632L273.684 198.248L273.464 197.909L273.152 197.613L272.752 197.361L272.269 197.148L271.711 196.971L271.087 196.825L270.409 196.706L269.688 196.607L268.939 196.522L268.175 196.444L267.411 196.365L266.662 196.28L265.942 196.181L265.263 196.062L264.64 195.917L264.082 195.74L263.599 195.527L263.199 195.274L262.887 194.979L262.667 194.64L262.54 194.256L262.504 193.828L262.558 193.358L262.693 192.848L262.904 192.302L263.181 191.724L263.512 191.12L263.886 190.496L264.288 189.858L264.705 189.213L265.122 188.569L265.524 187.931L265.897 187.307L266.229 186.703L266.505 186.125L266.716 185.579L266.852 185.069L266.905 184.599L266.87 184.171L266.743 183.787L266.523 183.448L266.211 183.153L265.811 182.9L265.328 182.687L264.77 182.51L264.146 182.365L263.468 182.245L262.747 182.146L261.998 182.061L261.234 181.983L260.471 181.905L259.721 181.82L259.001 181.721L258.323 181.601L257.699 181.456L257.141 181.279L256.658 181.066L256.258 180.813L255.946 180.518L255.726 180.179L255.599 179.795L255.564 179.367L255.617 178.897L255.753 178.387L255.964 177.841L256.24 177.263L256.572 176.659L256.945 176.035L257.347 175.398L257.764 174.753L258.181 174.108L258.583 173.47L258.956 172.846L259.288 172.242L259.564 171.665L259.775 171.118L259.911 170.608L259.964 170.138L259.929 169.71L259.802 169.327L259.582 168.987L259.27 168.692L258.87 168.439L258.387 168.226L257.829 168.049L257.205 167.904L256.527 167.785L255.807 167.686L255.057 167.601L254.294 167.522L253.53 167.444L252.781 167.359L252.06 167.26L251.382 167.141L250.758 166.995L250.2 166.818L249.717 166.605L249.317 166.353L249.005 166.057L248.785 165.718L248.658 165.334L248.623 164.907L248.676 164.436L248.812 163.926L249.023 163.38L249.299 162.803L249.631 162.199L250.004 161.575L250.406 160.937L250.823 160.292L251.24 159.647L251.642 159.009L252.016 158.385L252.347 157.781L252.624 157.204L252.835 156.658L252.97 156.148L253.024 155.678L252.988 155.25L252.861 154.866L252.641 154.527L252.329 154.231L251.929 153.979L251.446 153.766L250.888 153.589L250.265 153.443L249.586 153.324L248.866 153.225L248.117 153.14L247.353 153.062L246.589 152.984L245.84 152.898L245.119 152.799L244.441 152.68L243.817 152.535L243.259 152.358L242.776 152.145L242.376 151.892L242.064 151.597L241.844 151.258L241.717 150.874L241.682 150.446L241.735 149.976L241.871 149.466L242.082 148.92L242.359 148.342L242.69 147.738L243.063 147.114L243.466 146.476L243.882 145.831L244.299 145.187L244.701 144.549L245.075 143.925L245.406 143.321L245.683 142.743L245.894 142.197L246.03 141.687L246.083 141.217L246.047 140.789L245.92 140.405L245.7 140.066L245.389 139.771L244.989 139.518L244.506 139.305L243.948 139.128L243.324 138.983L242.646 138.863L241.925 138.764L241.176 138.679L240.412 138.601L239.648 138.523L238.899 138.438L238.178 138.339L237.5 138.22L236.876 138.074L236.318 137.897L235.835 137.684L235.435 137.431L235.124 137.136L234.904 136.797L234.777 136.413L234.741 135.985L234.794 135.515L234.93 135.005L235.141 134.459L235.418 133.881L235.749 133.278L236.123 132.653L236.525 132.016L236.942 131.371L237.358 130.726L237.761 130.088L238.134 129.464L238.465 128.86L238.742 128.283L238.953 127.737L239.089 127.227L239.142 126.756L239.107 126.328L238.98 125.945L238.76 125.605L238.448 125.31L238.048 125.057L237.565 124.844L237.007 124.667L236.383 124.522L235.705 124.403L234.984 124.304L234.235 124.219L233.471 124.14L232.707 124.062L231.958 123.977L231.238 123.878L230.559 123.759L229.936 123.613L229.378 123.437L228.895 123.223L228.495 122.971L228.183 122.676L227.963 122.336L227.836 121.953L227.801 121.525L227.854 121.054L227.989 120.544L228.2 119.998L228.477 119.421L228.808 118.817L229.182 118.193L229.584 117.555L230.001 116.91L230.418 116.265L230.82 115.627L231.193 115.003L231.525 114.4L231.801 113.822L232.012 113.276L232.148 112.766L232.201 112.296L232.166 111.868L232.039 111.484L231.819 111.145L231.507 110.85L231.107 110.597L230.624 110.384L230.066 110.207L229.442 110.061L228.764 109.942L228.043 109.843L227.294 109.758L226.53 109.68L225.767 109.602L225.017 109.516L224.297 109.417L223.619 109.298L222.995 109.153L222.437 108.976L221.954 108.763L221.554 108.51L221.242 108.215L221.022 107.876L220.895 107.492L220.86 107.064L220.913 106.594L221.049 106.084L221.26 105.538L221.536 104.96L221.868 104.356L222.241 103.732L222.643 103.094" stroke="black" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round"/>
+                                <path d="M116.46 275.657L116.861 276.542L117.262 277.405L117.663 278.225L118.064 278.982L118.465 279.657L118.866 280.234L119.267 280.698L119.668 281.037L120.069 281.245L120.47 281.314L120.871 281.245L121.272 281.037L121.673 280.698L122.074 280.234L122.475 279.657L122.876 278.982L123.277 278.225L123.678 277.405L124.079 276.542L124.48 275.657L124.882 274.772L125.283 273.909L125.684 273.089L126.085 272.332L126.486 271.657L126.887 271.08L127.288 270.617L127.689 270.277L128.09 270.07L128.491 270L128.892 270.07L129.293 270.277L129.694 270.617L130.095 271.08L130.496 271.657L130.897 272.332L131.298 273.089L131.699 273.909L132.1 274.772L132.501 275.657L132.902 276.542L133.303 277.405L133.704 278.225L134.105 278.982L134.506 279.657L134.907 280.234L135.308 280.698L135.709 281.037L136.11 281.245L136.511 281.314L136.912 281.245L137.313 281.037L137.714 280.698L138.115 280.234L138.516 279.657L138.917 278.982L139.318 278.225L139.719 277.405L140.12 276.542L140.521 275.657L140.922 274.772L141.323 273.909L141.724 273.089L142.125 272.332L142.526 271.657L142.927 271.08L143.328 270.617L143.729 270.277L144.13 270.07L144.531 270L144.932 270.07L145.333 270.277L145.734 270.617L146.135 271.08L146.536 271.657L146.937 272.332L147.338 273.089L147.739 273.909L148.14 274.772L148.541 275.657L148.942 276.542L149.343 277.405L149.744 278.225L150.145 278.982L150.546 279.657L150.947 280.234L151.348 280.698L151.749 281.037L152.15 281.245L152.551 281.314L152.952 281.245L153.353 281.037L153.754 280.698L154.155 280.234L154.556 279.657L154.957 278.982L155.358 278.225L155.759 277.405L156.16 276.542L156.561 275.657L156.962 274.772L157.363 273.909L157.764 273.089L158.165 272.332L158.566 271.657L158.967 271.08L159.368 270.617L159.769 270.277L160.17 270.07L160.571 270L160.972 270.07L161.373 270.277L161.774 270.617L162.175 271.08L162.576 271.657L162.977 272.332L163.378 273.089L163.779 273.909L164.18 274.772L164.581 275.657L164.982 276.542L165.383 277.405L165.784 278.225L166.185 278.982L166.586 279.657L166.987 280.234L167.388 280.698L167.789 281.037L168.19 281.245L168.591 281.314L168.992 281.245L169.393 281.037L169.794 280.698L170.195 280.234L170.596 279.657L170.997 278.982L171.398 278.225L171.799 277.405L172.2 276.542L172.601 275.657L173.002 274.772L173.403 273.909L173.804 273.089L174.205 272.332L174.606 271.657L175.007 271.08L175.408 270.617L175.809 270.277L176.21 270.07L176.611 270L177.012 270.07L177.413 270.277L177.814 270.617L178.215 271.08L178.616 271.657L179.017 272.332L179.418 273.089L179.819 273.909L180.22 274.772L180.621 275.657L181.022 276.542L181.423 277.405L181.824 278.225L182.225 278.982L182.626 279.657L183.027 280.234L183.428 280.698L183.829 281.037L184.23 281.245L184.631 281.314L185.032 281.245L185.433 281.037L185.834 280.698L186.235 280.234L186.636 279.657L187.037 278.982L187.438 278.225L187.839 277.405L188.24 276.542L188.641 275.657L189.042 274.772L189.443 273.909L189.844 273.089L190.245 272.332L190.646 271.657L191.047 271.08L191.448 270.617L191.849 270.277L192.25 270.07L192.651 270L193.052 270.07L193.453 270.277L193.854 270.617L194.255 271.08L194.656 271.657L195.057 272.332L195.458 273.089L195.859 273.909L196.26 274.772L196.661 275.657L197.062 276.542L197.463 277.405L197.864 278.225L198.265 278.982L198.666 279.657L199.067 280.234L199.468 280.698L199.869 281.037L200.27 281.245L200.671 281.314L201.072 281.245L201.473 281.037L201.874 280.698L202.275 280.234L202.676 279.657L203.077 278.982L203.478 278.225L203.879 277.405L204.28 276.542L204.681 275.657L205.082 274.772L205.483 273.909L205.884 273.089L206.285 272.332L206.686 271.657L207.087 271.08L207.488 270.617L207.889 270.277L208.29 270.07L208.691 270L209.092 270.07L209.493 270.277L209.894 270.617L210.295 271.08L210.696 271.657L211.097 272.332L211.498 273.089L211.899 273.909L212.3 274.772L212.701 275.657L213.102 276.542L213.503 277.405L213.904 278.225L214.305 278.982L214.706 279.657L215.107 280.234L215.508 280.698L215.909 281.037L216.31 281.245L216.711 281.314L217.112 281.245L217.513 281.037L217.914 280.698L218.315 280.234L218.716 279.657L219.117 278.982L219.518 278.225L219.919 277.405L220.32 276.542L220.721 275.657L221.122 274.772L221.523 273.909L221.924 273.089L222.325 272.332L222.726 271.657L223.127 271.08L223.528 270.617L223.929 270.277L224.33 270.07L224.731 270L225.132 270.07L225.533 270.277L225.934 270.617L226.335 271.08L226.736 271.657L227.137 272.332L227.538 273.089L227.939 273.909L228.34 274.772L228.741 275.657L229.142 276.542L229.543 277.405L229.944 278.225L230.345 278.982L230.746 279.657L231.147 280.234L231.548 280.698L231.949 281.037L232.35 281.245L232.751 281.314L233.152 281.245L233.553 281.037L233.954 280.698L234.355 280.234L234.756 279.657L235.157 278.982L235.558 278.225L235.959 277.405L236.36 276.542L236.761 275.657L237.162 274.772L237.563 273.909L237.964 273.089L238.365 272.332L238.766 271.657L239.167 271.08L239.568 270.617L239.969 270.277L240.37 270.07L240.771 270L241.172 270.07L241.573 270.277L241.974 270.617L242.375 271.08L242.776 271.657L243.177 272.332L243.578 273.089L243.979 273.909L244.38 274.772L244.781 275.657L245.182 276.542L245.583 277.405L245.984 278.225L246.385 278.982L246.786 279.657L247.187 280.234L247.588 280.698L247.989 281.037L248.39 281.245L248.791 281.314L249.192 281.245L249.593 281.037L249.994 280.698L250.395 280.234L250.796 279.657L251.197 278.982L251.598 278.225L251.999 277.405L252.4 276.542L252.801 275.657L253.202 274.772L253.603 273.909L254.004 273.089L254.405 272.332L254.806 271.657L255.207 271.08L255.608 270.617L256.009 270.277L256.41 270.07L256.811 270L257.212 270.07L257.613 270.277L258.014 270.617L258.415 271.08L258.816 271.657L259.217 272.332L259.618 273.089L260.019 273.909L260.42 274.772L260.821 275.657L261.222 276.542L261.623 277.405L262.024 278.225L262.425 278.982L262.826 279.657L263.227 280.234L263.628 280.698L264.029 281.037L264.43 281.245L264.831 281.314L265.232 281.245L265.633 281.037L266.034 280.698L266.435 280.234L266.836 279.657L267.237 278.982L267.638 278.225L268.039 277.405L268.44 276.542L268.841 275.657L269.242 274.772L269.643 273.909L270.044 273.089L270.445 272.332L270.846 271.657L271.247 271.08L271.648 270.617L272.049 270.277L272.45 270.07L272.851 270L273.252 270.07L273.653 270.277L274.054 270.617L274.455 271.08L274.856 271.657L275.257 272.332L275.658 273.089L276.059 273.909L276.46 274.772" stroke="black" stroke-width="4" stroke-miterlimit="10" stroke-linecap="round"/>
+                            </svg>
+                            
+                            <h2 style="color: #fff; font-size: 20px; margin: 0 0 16px 0; font-weight: 600;">
+                                🔮  Le futur se lit en 500 caractères.
+                            </h2>
+
+                            <p style="color: #a0a0a0; line-height: 1.6; margin: 0 0 24px 0; font-size: 15px;">
+                                Les IA prédisent l'avenir, moi je t'en envoie un aperçu chaque semaine. Pas des prédictions, des perspectives. C'est plus court, mais ça reste humain.
+                            </p>
+                            
+                            <a href="https://stars.chromeexperiments.com" class="email-preview-button" style="display: inline-block; background: #6366f1; color: #fff; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.2s ease; box-shadow: 0 12px 28px rgba(99, 102, 241, 0.35);" target="_blank" rel="noopener">
+                                Lire l'article
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 24px;"><strong>Ce code, c'est 20 lignes.</strong> Mais ça donne une newsletter unique, à ton image, que personne d'autre n'aura.</p>
+            </section>
+
+            <!-- Le process -->
+            <section class="section">
+                <h2>Le process</h2>
+                <p>J'ai reproduit le pipeline complet d'un projet client pour prouver que tout tient la route :</p>
+
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Veille et curation</h4>
+                            <p>Repérage des sujets tech/IA/design à fort potentiel.</p>
+                        </div>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Sélection</h4>
+                            <p>2 à 3 thèmes par envoi, choisis pour leur intérêt réel.</p>
+                        </div>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Rédaction</h4>
+                            <p>Travail de fond, vulgarisation, regard personnel (pas du texte généré).</p>
+                        </div>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Design HTML</h4>
+                            <p>Intégration manuelle, responsive, cohérente avec la DA BigXBang.</p>
+                        </div>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Envoi & tracking</h4>
+                            <p>Automatisé via GMass, pour suivre les performances.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p>Ce workflow, je peux le transposer à n'importe quel métier : cabinet d'avocats, studio créatif, start-up, coach. Le fond change, la logique reste la même.</p>
+            </section>
+
+            <!-- Le résultat attendu -->
+            <section class="section">
+                <h2>Le résultat attendu</h2>
+                <p>Une newsletter qui prouve qu'on peut allier fond, forme et efficacité sans dépendre d'une usine à gaz.</p>
+
+                <p>Le résultat, ce n'est pas un "email joli" : c'est un format qui positionne une expertise, renforce une image et simplifie la diffusion.</p>
+
+                <p>Et si tu veux voir ce que ça donnerait dans ton domaine, on peut le prototyper ensemble. Avec ton ton, ton design, ton message.</p>
+
+                <p><strong>Une newsletter bien faite ne "communique" pas. Elle installe ta voix dans la tête de ceux qui te lisent.</strong></p>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="https://calendar.app.google/qk7pa13Mu3fP3ex16" class="btn btn-primary" target="_blank">Je contacte</a>
+                </div>
+            </section>
+
+            <!-- Stack & conformité -->
+            <section class="section">
+                <h2>Stack & conformité</h2>
+                
+                <h3>Côté outils</h3>
+                <ul>
+                    <li><strong>Rédaction</strong> : Notion pour la veille et la structuration.</li>
+                    <li><strong>Design</strong> : HTML/CSS sur mesure.</li>
+                    <li><strong>Envoi</strong> : GMass + Gmail API pour un contrôle total.</li>
+                    <li><strong>Base de contacts</strong> : Google Sheets, conforme RGPD.</li>
+                </ul>
+
+                <p>Et si ton activité touche à des données sensibles, je peux adapter la stack : hébergement local, double opt-in, politique de transparence claire.</p>
+
+                <p><strong>Ce n'est pas du bricolage. C'est une démonstration qu'on peut faire simple, solide et élégant à la fois.</strong></p>
+
+                <div class="info-box">
+                    <div class="info-box-title">
+                        💡 Gestion des désabonnements avec GMass
+                    </div>
+                    <p>Avec GMass, je crée un lien de désabonnement automatique qui supprime les contacts d'une Google Sheet. C'est moins "fancy" qu'un Mailchimp mais tout aussi conforme au RGPD. Et je garde le contrôle total de ma base.</p>
+                </div>
+            </section>
+
+            <!-- CTA final -->
+            <section class="cta-section section">
+                <h2>Emmenons ton business dans l'espace</h2>
+                <p class="subtitle">Tu veux une newsletter qui positionne ton expertise au lieu de spammer tes contacts ? On en parle.</p>
+                
+                <div class="cta-buttons">
+                    <a href="https://calendar.app.google/qk7pa13Mu3fP3ex16" class="btn btn-primary" target="_blank">Je contacte</a>
+                    <a href="https://www.bigxbang.studio" class="btn btn-secondary">Retour à l'accueil</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Intersection Observer pour déclencher l'animation au scroll
+        const arrow = document.getElementById('arrow');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    arrow.classList.add('arrow-appear');
+                    observer.unobserve(arrow); // Ne déclencher qu'une seule fois
+                }
+            });
+        }, {
+            threshold: 0.5 // L'animation se déclenche quand 50% de l'élément est visible
+        });
+
+        observer.observe(arrow);
+    </script>
+</body>
+</html>
