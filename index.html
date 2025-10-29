@@ -430,6 +430,27 @@
                 flex-direction: column;
                 align-items: stretch;
             }
+
+            /* Responsive pour la démo code/newsletter */
+            [style*="grid-template-columns: 1fr 48px 1fr"] {
+                display: grid !important;
+                grid-template-columns: 1fr !important;
+                grid-template-rows: auto auto auto !important;
+                gap: 24px !important;
+            }
+
+            #arrow {
+                transform: rotate(90deg);
+            }
+
+            @keyframes arrowSlideVertical {
+                0% { transform: rotate(90deg) translateX(-10px); opacity: 0; }
+                100% { transform: rotate(90deg) translateX(0); opacity: 1; }
+            }
+
+            #arrow.arrow-appear {
+                animation: arrowSlideVertical 0.8s ease-out forwards !important;
+            }
         }
     </style>
 </head>
