@@ -450,11 +450,21 @@
             }
 
             /* Responsive pour la démo code/newsletter */
-            [style*="grid-template-columns: 1fr 48px 1fr"] {
+            .demo-grid {
                 display: grid !important;
                 grid-template-columns: 1fr !important;
                 grid-template-rows: auto auto auto !important;
                 gap: 24px !important;
+            }
+
+            /* Limiter la largeur des blocs sur mobile */
+            .demo-grid > div {
+                max-width: 100%;
+                overflow-x: auto;
+            }
+
+            .demo-grid pre {
+                font-size: 9px !important;
             }
 
             #arrow {
@@ -561,7 +571,7 @@
 <p class="desktop-text" style="margin-bottom: 32px;">Voilà un exemple de mini-newsletter. À gauche le code, à droite le rendu.</p>
 <p class="mobile-text" style="margin-bottom: 32px; display: none;">Voilà un exemple de mini-newsletter. En haut le code, en bas le rendu.</p>
 
-                <div style="display: grid; grid-template-columns: 1fr 48px 1fr; gap: 24px; align-items: stretch; margin: 32px 0;">
+                <div class="demo-grid" style="display: grid; grid-template-columns: 1fr 48px 1fr; gap: 24px; align-items: stretch; margin: 32px 0;">
                     <!-- Code snippet -->
                     <div style="background: #1e1e1e; border-radius: 12px; padding: 20px; overflow-x: auto; display: flex; align-items: center;">
                         <pre style="margin: 0; font-family: 'Fira Code', 'Consolas', monospace; font-size: 10.5px; line-height: 1.5; color: #d4d4d4;"><code>&lt;<span style="color: #569cd6;">div</span> <span style="color: #9cdcfe;">style</span>=<span style="color: #ce9178;">"max-width: 600px;
